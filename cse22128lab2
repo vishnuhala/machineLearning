@@ -1,0 +1,29 @@
+import pandas as pd
+import numpy as np
+ 
+xls = pd.read_excel("Lab_Session_Data.xlsx")
+xls
+data = xls.dropna(how= "any", axis=1)
+data.drop(["Customer"], axis = 1, inplace = True)
+A = data.iloc[:, :-1].to_numpy()
+C = data.iloc[:, -1].to_numpy()
+C = C.reshape(-1,1)
+print("Dimensionality of matrix A:", A.shape)
+print("No. of vectors in vector space ",A.shape[0])
+print(A)
+print(C)
+l = len(C)
+k = 0
+for i in range(l):
+    if C[i] > 200:
+        print("Customer no. C",k,"is rich")
+        k = k + 1
+    else:
+        print("Customer no. C",k,"is poor")
+        k = k + 1
+D = np.linalg.pinv(A)
+result = np.dot(D, C)
+print("The X vector is: ")
+print(result)
+rank = np.linalg.matrix_rank(A)
+print("Rank of the given Matrix is : ",rank)
